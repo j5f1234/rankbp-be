@@ -38,10 +38,12 @@ func initConfig() {
 	Config.AppSecret = envOr("APP_SECRET", "gin-example:secret")
 	Config.AppLanguage = envOr("APP_LANGUAGE", "en")
 	Config.MysqlHost = envOr("APP_MYSQL_HOST", "127.0.0.1")
-	Config.MysqlPort = envOr("APP_MYSQL_PORT", "3306")
+	// Config.MysqlPort = envOr("APP_MYSQL_PORT", "3306") //开发数据库
+	Config.MysqlPort = envOr("APP_MYSQL_PORT", "3307") // 部署数据库
 	Config.MysqlName = envOr("APP_MYSQL_NAME", "rankbp")
 	Config.MysqlUser = envOr("APP_MYSQL_USER", "root")
-	Config.MysqlPass = envOr("APP_MYSQL_PASS", "123456")
+	// Config.MysqlPass = envOr("APP_MYSQL_PASS", "123456") //开发数据库
+	Config.MysqlPass = envOr("APP_MYSQL_PASS", "root") // 部署数据库
 	Config.AllowOrigins = envOr("APP_ALLOW_ORIGINS", "*")
 	Config.AllowHeaders = envOr("APP_ALLOW_HEADERS", "Origin|Content-Length|Content-Type|Authorization")
 }

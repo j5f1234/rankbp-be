@@ -1,0 +1,56 @@
+# version: '3'
+
+# services:
+#   app:
+#     image: rankbp-image
+#     container_name: rankbp
+#     ports:
+#       - 8088:4567
+#     environment:
+#       - APP_SECRET=gin-example
+#       - APP_MYSQL_HOST=mysql
+#       - APP_MYSQL_PORT=3307
+#       - APP_MYSQL_NAME=rankbp
+#       - APP_MYSQL_USER=root
+#       - APP_MYSQL_PASS=root
+
+# 启动数据库
+version: '3'
+networks:
+  custom_app_net:
+    name: app_net
+    external: true
+services:
+  database: 
+    image: mysql
+    container_name: mysql
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./mysql_data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rankbp
+    command: 
+      --character-set-server=utf8mb4
+      --collation-server=utf8mb4_unicode_ci
+      --default-authentication-plugin=mysql_native_password
+    networks:
+      - custom_app_net  
+
+  app:
+    image: rankbp-image
+    container_name: rankbp
+    environment:
+      - APP_SECRET=gin-example
+      - APP_MYSQL_HOST=mysql
+      - APP_MYSQL_PORT=3306
+      - APP_MYSQL_NAME=rankbp
+      - APP_MYSQL_USER=root
+      - APP_MYSQL_PASS=root
+    ports:
+      - 4567:8088
+    depends_on:
+      - database
+    networks:
+      - custom_app_net
